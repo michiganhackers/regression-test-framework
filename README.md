@@ -35,7 +35,12 @@ To run (defaults to testplan.plan if no arguments are given):
 
 What you should see:
 
-  
+    NAME                RUNTIME             OUTPUT_CORRENT      SEGFAULT            TIMEOUT             
+    genOutput           0.00805902481079    None                False               False               
+    testCorrect         0.00782299041748    True                False               False               
+    testIncorrect       0.00956702232361    False               False               False               
+    testTimeOut         1.00118613243       None                False               True                
+    testSegfault        0.00868511199951    None                False               False    
 
 
 
