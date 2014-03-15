@@ -160,7 +160,7 @@ if __name__ == "__main__":
 	f = open(testplan_file, 'r')
 	p = Testplan("temp name")
 	p.decodeJson(f.read())
-	data =  "NAME", "RUNTIME" , "OUTPUT_CORRENT" , "SEGFAULT", "TIMEOUT"
+	data =  "NAME", "RUNTIME (Seconds)" , "OUTPUT_CORRECT" , "SEGFAULT", "TIMEOUT"
 	string = ""
 	for word in data:
 		col_width = 20
