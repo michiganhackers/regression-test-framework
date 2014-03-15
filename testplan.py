@@ -6,6 +6,21 @@ import json
 import threading
 import sys
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+
+    def disable(self):
+        self.HEADER = ''
+        self.OKBLUE = ''
+        self.OKGREEN = ''
+        self.WARNING = ''
+        self.FAIL = ''
+        self.ENDC = ''
 
 class Cmd:
 	def __init__(self, cmd, timeout): 
@@ -141,11 +156,30 @@ class Testcase:
 	def run(self):
 		command = Cmd(self.run_script, self.timeout_stop)
 		output_correct = self.validateOutput(command.output)
-		data =  self.test_name, str(command.runtime) , str(output_correct) ,str(command.returncode == -11), str(command.returncode == -15)
+		# Parse Timeout Result
+		timeout_result = "Pass"
+		if (command.returncode == -15):
+			timeout_result = "Error"
+		elif (command.runtime > self.timeout_warn):
+			timeout_result = "Warn"
+
+		output_result = "N/A"
+		if (output_correct == True):
+			output_result = "Pass"
+		if (output_correct == False):
+			output_result = "Error"
+
+		
+
+		data =  self.test_name, str(command.runtime) , output_result ,str(command.returncode == -11), timeout_result
 		string = ""
 		for word in data:
 			col_width = 20
 			string = string + "".join(word.ljust(col_width) )
+		if (output_correct == False or command.returncode == -11 or command.returncode == -15):
+			string =  bcolors.FAIL + string + bcolors.ENDC
+		elif (command.runtime > self.timeout_warn):
+			string = bcolors.WARNING + string + bcolors.ENDC
 		print(string)
 
 
@@ -165,6 +199,7 @@ if __name__ == "__main__":
 	for word in data:
 		col_width = 20
 		string = string + "".join(word.ljust(col_width) )
+	string = bcolors.HEADER + string + bcolors.ENDC
 	print string
 	p.executePlan()
 

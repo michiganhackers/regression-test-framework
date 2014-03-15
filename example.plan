@@ -28,6 +28,14 @@
             "timeout_warn": 10
         },
         {
+            "test_name": "testWarn", 
+            "build_script": "", 
+            "run_script": "sleep 5; echo hello world", 
+            "correct_output": "test_output.tmp", 
+            "timeout_stop": 10, 
+            "timeout_warn": 5
+        },
+        {
             "test_name": "testTimeOut", 
             "build_script": "", 
             "run_script": "yes", 
