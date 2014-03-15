@@ -39,7 +39,7 @@
             "test_name": "testSegfault",
             "__comment": "not sure of an easy way to test segfaults", 
             "build_script": "", 
-            "run_script": "", 
+            "run_script": "kill -SEGV $$", 
             "correct_output": "", 
             "timeout_stop": 1, 
             "timeout_warn": 1
