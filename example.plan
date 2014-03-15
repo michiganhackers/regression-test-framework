@@ -1,0 +1,49 @@
+{
+    "plan_name": "Sample Test Plan", 
+    "output_file": "output", 
+    "precompile_script": "",
+    "testplan": [
+        {
+            "test_name": "genOutput", 
+            "build_script": "", 
+            "run_script": "echo hello world > test_output.tmp", 
+            "correct_output": "", 
+            "timeout_stop": 10, 
+            "timeout_warn": 10
+        }, 
+        {
+            "test_name": "testCorrect", 
+            "build_script": "", 
+            "run_script": "echo hello world", 
+            "correct_output": "test_output.tmp", 
+            "timeout_stop": 10, 
+            "timeout_warn": 10
+        },
+        {
+            "test_name": "testIncorrect", 
+            "build_script": "", 
+            "run_script": "echo goodbye world", 
+            "correct_output": "test_output.tmp", 
+            "timeout_stop": 10, 
+            "timeout_warn": 10
+        },
+        {
+            "test_name": "testTimeOut", 
+            "build_script": "", 
+            "run_script": "yes", 
+            "correct_output": "", 
+            "timeout_stop": 1, 
+            "timeout_warn": 1
+        },
+        {
+            "test_name": "testSegfault",
+            "__comment": "not sure of an easy way to test segfaults", 
+            "build_script": "", 
+            "run_script": "", 
+            "correct_output": "", 
+            "timeout_stop": 1, 
+            "timeout_warn": 1
+        }
+
+    ]
+}
