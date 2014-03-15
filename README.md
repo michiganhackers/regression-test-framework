@@ -1,6 +1,6 @@
 # About
 
-A simple regression test framework (think personal autograder) for use on your EECS project. You can use it to organize and run all your test inputs for your 281 or 470 project. You can use it in your EECS projects, assuming of course that doing so does not violate the code use, or honor code restrictions, by which you MUST abide.
+A simple regression test framework (think personal autograder) for use on your EECS project. You can use it to organize and run you code against given inputs and compare the output for correctness. You can use it in your EECS projects, assuming of course that doing so does not violate the code use, or honor code restrictions, by which you MUST abide.
 
 # Usage
 
@@ -35,7 +35,7 @@ To run (defaults to testplan.plan if no arguments are given):
 
 What you should see:
 
-    NAME                RUNTIME             OUTPUT_CORRENT      SEGFAULT            TIMEOUT             
+    NAME                RUNTIME (Seconds)   OUTPUT_CORRECT      SEGFAULT            TIMEOUT             
     genOutput           0.00805902481079    None                False               False               
     testCorrect         0.00782299041748    True                False               False               
     testIncorrect       0.00956702232361    False               False               False               
