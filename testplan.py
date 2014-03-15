@@ -52,10 +52,11 @@ class Cmd:
 
 
 class Testplan:
-	def __init__(self, plan_name, output_file="tests.out", precompile_script=""):
+	def __init__(self, plan_name, output_file="tests.out", precompile_script="", postrun_script=""):
 		self.plan_name = plan_name
 		self.output_file = output_file
 		self.precompile_script = precompile_script
+		self.postrun_script = postrun_script
 		self.testplan = []
 
 	def decodeJson(self, jsn): # deserialize Testplan from json
@@ -63,6 +64,11 @@ class Testplan:
 		self.plan_name = data["plan_name"]
 		self.output_file = data["output_file"]
 		self.precompile_script = data["precompile_script"]
+		try:
+			self.postcompile_script = data["postrun_script"]
+		except Exception, e:
+			do_nothing = 0
+
 		for testcase in data["testplan"]:
 			case = Testcase("", "", "", "")
 			case.decodeJson(testcase)
@@ -73,6 +79,7 @@ class Testplan:
 			'plan_name':self.plan_name,
 			'output_file':self.output_file,
 			'precompile_script':self.precompile_script,
+			'postrun_script':self.postrun_script,
 			'testplan':[]
 		}
 		for test in self.testplan:
@@ -94,11 +101,16 @@ class Testplan:
 	def run(self):
 		for test in self.testplan:
 			test.run()
-			
+	
+	def postcompile(self):
+		Cmd(self.postcompile_script, 60)
+
+
 	def executePlan(self):
-		self.precompile();
-		self.compile();
-		self.run();
+		self.precompile()
+		self.compile()
+		self.run()
+		self.postcompile()
 
 	def addTestcase(self, testcase):
 		self.testplan.append(testcase)
@@ -169,7 +181,7 @@ class Testcase:
 		if (output_correct == False):
 			output_result = "Error"
 
-		
+
 
 		data =  self.test_name, str(command.runtime) , output_result ,str(command.returncode == -11), timeout_result
 		string = ""

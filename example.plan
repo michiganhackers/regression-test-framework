@@ -2,6 +2,7 @@
     "plan_name": "Sample Test Plan", 
     "output_file": "output", 
     "precompile_script": "",
+    "post_script": "rm test_output.tmp",
     "testplan": [
         {
             "test_name": "genOutput", 
