@@ -16,14 +16,15 @@ Here is an example plan as a good starting point.
         "plan_name": "My test plan", 
         "output_file": "<thisValueIsNotUsedYet>", 
         "precompile_script": "make",
+        "postrun_script": "make clean",
         "testplan": [
             {
                 "test_name": "test1", 
                 "build_script": "make test1", 
                 "run_script": "./test1.out", 
                 "correct_output": "correctOutput/test1.txt", 
-                "timeout_stop": 10, 
-                "timeout_warn": 10
+                "timeout_warn": 5,
+                "timeout_stop": 10 
             }
         ]
     }
