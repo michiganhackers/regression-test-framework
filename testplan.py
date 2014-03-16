@@ -103,7 +103,7 @@ class Testplan:
 			test.run()
 	
 	def postcompile(self):
-		Cmd(self.postcompile_script, 60)
+		Cmd(self.postrun_script, 60)
 
 
 	def executePlan(self):
