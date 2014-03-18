@@ -57,6 +57,7 @@ class Testplan:
 		self.output_file = output_file
 		self.precompile_script = precompile_script
 		self.postrun_script = postrun_script
+		self.diff_script = ""
 		self.testplan = []
 
 	def decodeJson(self, jsn): # deserialize Testplan from json
@@ -65,13 +66,18 @@ class Testplan:
 		self.output_file = data["output_file"]
 		self.precompile_script = data["precompile_script"]
 		try:
-			self.postcompile_script = data["postrun_script"]
+			self.postrun_script = data["postrun_script"]
+		except Exception, e:
+			do_nothing = 0
+		try:
+			self.diff_script = data["diff_script"]
 		except Exception, e:
 			do_nothing = 0
 
 		for testcase in data["testplan"]:
 			case = Testcase("", "", "", "")
 			case.decodeJson(testcase)
+			case.diff_script = self.diff_script
 			self.testplan.append(case)
 
 	def encodeJson(self):
@@ -84,7 +90,6 @@ class Testplan:
 		}
 		for test in self.testplan:
 			data['testplan'].append(test.__dict__)
-			print(test.encodeJson())
 		return json.dumps(data,  indent=4, sort_keys=True)
 
 
@@ -126,6 +131,7 @@ class Testcase:
 		self.correct_output = correct_output
 		self.timeout_warn = timeout_warn
 		self.timeout_stop = timeout_stop
+		self.diff_script = ""
 
 	def decodeJson(self, jsn):
 		self.test_name = jsn["test_name"]
@@ -154,7 +160,10 @@ class Testcase:
 		f.close()
 		if (self.correct_output != ""):
 			if os.path.isfile(self.correct_output):
-				diff = "diff " + self.correct_output + " " + tmp_file_name
+				if (self.diff_script == ""):
+					diff = "diff " + self.correct_output + " " + tmp_file_name
+				else:
+					diff = self.diff_script
 				command = Cmd(diff,60)
 				if command.output:
 					return False
